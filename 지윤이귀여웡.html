@@ -1,0 +1,98 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=2.0">
+</head>
+<body>
+  <center><h1>친구 이름 쓰기</h1></center>
+<center>
+  <input type="button" id="tajaStart" value="종료">
+  <input type="checkbox" id="sori">소리끄기<br>
+  <input type="button" value="점수">
+  <input type="text" id="tajaPoints" size=7><br>
+  <progress id="rTime" value=100 max=100></progress><br>
+  <input type="text" id="target" size=8>
+  <label id="alias">으하화</label><br>
+  <input type="text" id="inputTyping" size=18><br>
+</center>
+<script>
+  points = 0
+  gameEnd = false
+  dtid = null
+  jsName = ["김치찜", "피자", "케이에프씨", "성요한", "작은형석",
+    "구동매", "송휘", "박지지윤", "바스코", "범재", "준구", "종건",
+    "뿌링클", "세종대왕", "마카롱", "할말이없네", "으하하", "뉴진스" ]
+  jsAlias = ["바보", "멍청이", "응아니야", "귀여웡!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", "배고파",
+    "밥줘", "칼국수", "사랑해", "귀여웡", "준구", "박진영!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"]
+  function setNewWord() {
+    if ( gameEnd )
+     return
+    k = Math.floor(Math.random()*jsName.length)
+      target.value = jsName[k]
+    k = Math.floor(Math.random()*jsAlias.length)
+      document.querySelector("#alias").innerHTML = jsAlias[k]
+      rTime.value = 100
+      dtid = setTimeout(decreaseTime, 1000)
+    }                                              
+    function decreaseTime() {
+      rTime.value -= 10
+  if ( rTime.value == 0 ) {
+    setNewWord()
+  }
+  else
+    dtid = setTimeout(decreaseTime, 1000)
+}
+    function wordCheck(evt) { 
+      if ( evt.keyCode == 13 ) {
+    if ( target.value == inputTyping.value.toLowerCase() ) {
+      points += rTime.value;
+      tajaPoints.value = points
+      playAudio()
+    }
+    clearTimeout(dtid)
+    inputTyping.value = ""
+    setNewWord()
+  }
+}
+
+    function gameStop() { gameEnd = true;
+  target.value = ""
+  inputTyping.value = ""
+  rTime.value = 0
+}
+
+var audio = new Audio("katalk.mp3")
+function playAudio() {
+  if ( eval("sori").checked )
+    return
+  audio.play() }
+   
+    function playAudio() { }
+    function init() { 
+      points = 0
+      gameEnd = false
+      tajaPoints.value = 0
+      tajaStart.oneclick = gameStop
+      inputTyping.onkeypress = wordCheck
+      setNewWord()
+      inputTyping.focus()
+    }
+    init()
+  // 시작
+</script>
+
+
+
+
+
+
+
+
+
+</datagrid>
+  <img src="" alt="">
+</picture>
+
+</body>
+</html>
